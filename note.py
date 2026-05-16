@@ -48,11 +48,16 @@ root = tk.Tk()
 root.title("이름없는 메모장")
 root.geometry("800x600")
 
-# Text 부품 만들기
-area = tk.Text(root)
+# 세로스크롤 장착
+frame = tk.Frame(root) # 프레임 설치
+frame.pack(fill=tk.BOTH, expand=True) # 프레임을 가로세로 모두 채우고, 창이 커지면 같이 커짐
+scrollbar = tk.Scrollbar(frame) # 스크롤바생성
+scrollbar.pack(side=tk.RIGHT, fill=tk.Y) # 창 오른쪽에 붙이고, 세로로 채움
 
-# 화면에 붙이기
-area.pack(expand=True, fill='both')
+# Text 부품 만들기
+area = tk.Text(frame, font=("맑은 고딕", 12), yscrollcommand=scrollbar.set)
+area.pack(fill=tk.BOTH, expand=True)
+scrollbar.config(command=area.yview)
 
 # 메뉴바 생성
 menu_bar = tk.Menu(root)
@@ -69,5 +74,7 @@ file_menu.add_command(label="종료", command=root.quit)
 # 창에 메뉴바 장착
 menu_bar.add_cascade(label="파일", menu=file_menu)
 root.config(menu=menu_bar)
+
+
 
 root.mainloop()
